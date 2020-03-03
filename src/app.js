@@ -2,8 +2,8 @@ import express from 'express';
 
 const app = express();
 
-app.use('/hello-world', (req, res) => {
-  res.send('hello world');
-})
+const indexRouter = require('./todos');
+
+app.use('/todos', indexRouter);
 
 export default app;
