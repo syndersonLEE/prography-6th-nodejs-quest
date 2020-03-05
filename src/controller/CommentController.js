@@ -1,8 +1,8 @@
 const response = require('../library/response');
 
+//1.할일 등록: POST /todos
 async function postComment(req, res) {
     try {
-        res.end('postComment');
     } catch (error) {
         console.log(error);
     }
