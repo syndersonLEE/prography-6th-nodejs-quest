@@ -1,6 +1,4 @@
-const response = require('../library/response');
 const db = require('../library/mysql');
-const moment = require('moment');
 
 async function selectTodo(todoid) {
     const returnQuery = `SELECT todo.*, (SELECT GROUP_CONCAT(tag.tagName) FROM tag WHERE todo.id = tag.todoId) AS tags FROM todo WHERE todo.id = ?`;
@@ -16,7 +14,7 @@ async function postTodos(req, res) {
         if (req.body) {
             const bodyData = req.body;
             if (!bodyData.title || !bodyData.description) res.status(400).json({
-                msg : "Not All data"
+                msg : "No data"
             });
             else {
                 const TodoQuery = `INSERT INTO todo(title, description) VALUES (?, ?)`;
@@ -38,7 +36,7 @@ async function postTodos(req, res) {
             }
         } else {
             res.status(400).json({
-                msg : "Not All data"
+                msg : "No data"
             })
         }
     } catch (error) {
@@ -74,7 +72,7 @@ async function getTodos(req, res) {
     try {
         const selectQuery = `SELECT * FROM todo WHERE id = ${req.params.todoId}`;
         const selectResult = await db.query(selectQuery);
-        if (selectResult.length == 0) res.status(400).json({ msg: "No Data" });
+        if (selectResult.length == 0) res.status(400).json({ msg: "Bad Request" });
         else {
             const returnData = await selectTodo(req.params.todoId);
 
